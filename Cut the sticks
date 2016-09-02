@@ -1,0 +1,51 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main(){
+    int n, min;
+    cin >> n;
+    vector<int> arr(n);
+    
+    for(int arr_i = 0;arr_i < n;arr_i++){
+       cin >> arr[arr_i];
+    }
+    sort(arr.begin(), arr.end());               //this sorts my array, so it is ascending
+    min = arr[0];                               //this would be where my smallest value is
+    cout << arr.size() <<endl;                  //first prints out size of vector
+
+    while (arr.front() != arr.back()){
+        int cut = 0;
+        for(int arr_i=1; arr_i<arr.size(); arr_i++){
+           if (arr[arr_i] == min){                  //cause it will be impossible to be smaller and we don't need the equivalent
+               cut = arr_i;                       //it will keep updating until you dont have to                   
+           }    
+           else {                                   //if it is bigger than your minimum value, you would have to subtract
+               //cout << "index : " << arr_i <<endl;
+               //cout << arr[arr_i] << " is updated to : ";
+               arr[arr_i] = arr[arr_i] - min;       //update the value
+               
+               //cout << arr[arr_i] <<endl;
+           }
+        }
+        //cout << "cut : " << cut <<endl;
+        arr.erase(arr.begin(), arr.begin()+cut+1);
+        
+        /*
+        for(int arr_i=0; arr_i<arr.size(); arr_i++){            //print the new array
+            cout << arr[arr_i] << " ";
+        }
+        cout << endl;
+        */
+        cout << arr.size() <<endl;
+        sort(arr.begin(), arr.end());               //this sorts my array, so it is ascending
+        min = arr[0];
+        //cout << "the new minimum is : " << min << endl;
+    }
+        
+    return 0;
+}
+
