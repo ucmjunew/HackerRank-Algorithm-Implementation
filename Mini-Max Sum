@@ -1,0 +1,28 @@
+#include <limits>
+#include <iostream>
+
+using namespace std;
+
+
+int main(){
+    long int a[5];
+    cin >> a[0] >> a[1] >> a[2] >> a[3] >> a[4];
+    
+    long int total = a[0]+a[1]+a[2]+a[3]+a[4];
+    long int min = numeric_limits<long int>::lowest();        //-2147483648
+    long int max = numeric_limits<long int>::max();           //2147483647
+    
+    for(int i=0; i<5 ; i++){
+        if(a[i] > min){     //it will go through this loop and the whole array to find the lowest number
+            min = a[i];
+        }
+        if(a[i] < max){     //it will go through this loop and the whole array to find the largest number
+            max = a[i];
+        }
+    }
+    
+    cout << total - min << " "; //this will give you the biggest value the five-1 digit can give you
+    cout << total - max << " "; //this will give you the lowest value the five-1 digit can give you
+    
+    return 0;
+}
