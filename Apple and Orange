@@ -1,0 +1,135 @@
+#include <bits/stdc++.h>
+/*
+The first line contains two space-separated integers denoting the respective values of s and t. 
+The second line contains two space-separated integers denoting the respective values of a and b. 
+The third line contains two space-separated integers denoting the respective values of m and n. 
+The fourth line contains m space-separated integers denoting the respective distances that each apple falls from point . 
+The fifth line contains m space-separated integers denoting the respective distances that each orange falls from point .
+
+7 11            -the size of the house
+5 15            -where the apple and orange trees are
+3 2             -how many apple and orange 
+-2 2 1          -negative or positive (we care for apples' postive)
+5 -6            -negative or positive (we care for oranges' negatives)
+
+*/  
+
+
+using namespace std;
+
+vector<string> split_string(string);
+
+/*
+ * Complete the countApplesAndOranges function below.
+ */
+void countApplesAndOranges(int s, int t, int a, int b, vector<int> apples, vector<int> oranges) {
+    int appleTouch = 0;
+    int orangeTouch = 0;
+    
+    int temporaryCheck;
+    
+    for (int i=0; i<apples.size(); i++){
+        if (apples[i] > 0){                 //if it is rolling to the right/positive we need to check if it hits the house
+           // cout << "the distance it travels is : " <<apples[i] <<endl;
+            temporaryCheck = a + apples[i];
+           // cout << "the temporaryCheck is " <<temporaryCheck <<endl;
+            
+            if (temporaryCheck >= s && temporaryCheck <= t){       //if it is touching the house, don't think I need the second check
+                appleTouch++;
+            }
+            
+        }
+    }
+    
+    for (int i=0; i<oranges.size(); i++){
+        if (oranges[i] < 0){                 //if it is rolling to the left/negative we need to check if it hits the house
+           // cout << "the distance it travels is : " <<oranges[i] <<endl;
+            temporaryCheck = b + oranges[i];
+           // cout << "the temporaryCheck is " <<temporaryCheck <<endl;
+            if (temporaryCheck >= s && temporaryCheck <= t){       //if it is touching the house, don't think I need the second check
+                orangeTouch++;
+            }
+        }
+    }    
+    
+    cout << appleTouch <<endl;
+    cout << orangeTouch <<endl;
+
+}
+
+int main()
+{
+    string st_temp;
+    getline(cin, st_temp);
+    vector<string> st = split_string(st_temp);          //split the string inputed
+    int s = stoi(st[0]);                                //making the string an integer
+    int t = stoi(st[1]);
+
+    string ab_temp;                                     //initalizing ab string
+    getline(cin, ab_temp);                              //getting the value
+    vector<string> ab = split_string(ab_temp);          //splitting the string
+    int a = stoi(ab[0]);                                //making the string an integer
+    int b = stoi(ab[1]);
+
+    string mn_temp;                                     //initalizing mn
+    getline(cin, mn_temp);                              //getting the value
+    vector<string> mn = split_string(mn_temp);          //placing the values in
+    int m = stoi(mn[0]);
+    int n = stoi(mn[1]);
+
+    string apple_temp_temp;
+    getline(cin, apple_temp_temp);
+    vector<string> apple_temp = split_string(apple_temp_temp);
+    vector<int> apple(m);
+
+    for (int apple_itr = 0; apple_itr < m; apple_itr++) {
+        int apple_item = stoi(apple_temp[apple_itr]);
+        apple[apple_itr] = apple_item;
+    }
+
+    string orange_temp_temp;
+    getline(cin, orange_temp_temp);
+    vector<string> orange_temp = split_string(orange_temp_temp);
+    vector<int> orange(n);
+    
+    for (int orange_itr = 0; orange_itr < n; orange_itr++) {
+        int orange_item = stoi(orange_temp[orange_itr]);
+        orange[orange_itr] = orange_item;
+    }
+
+    countApplesAndOranges(s, t, a, b, apple, orange);
+
+    return 0;
+}
+
+vector<string> split_string(string input_string) {
+    string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
+        return x == y and x == ' ';
+    });
+    input_string.erase(new_end, input_string.end());
+    while (input_string[input_string.length() - 1] == ' ') {
+        input_string.pop_back();
+    }
+
+    vector<string> splits;
+    char delimiter = ' ';
+
+    size_t i = 0;
+    size_t pos = input_string.find(delimiter);
+
+    while (pos != string::npos) {
+        splits.push_back(input_string.substr(i, pos - i));
+
+        i = pos + 1;
+        pos = input_string.find(delimiter, i);
+    }
+
+    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
+
+    return splits;
+}
+
+
+/*
+https://www.hackerrank.com/challenges/apple-and-orange/problem
+*/
