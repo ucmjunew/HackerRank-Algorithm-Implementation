@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<int> gradingStudents(vector<int> grades) {       //brings in the vector of inputed grades
+    int initalGrade;
+    int tempGrade;
+    int difference;
+    
+    for (int i=0; i<grades.size(); i++){
+        difference = 0;                                 //to see how much of a difference is it to get to a multiple of 5
+        initalGrade = grades[i];
+        
+        if (initalGrade%5 != 0 && initalGrade > 37){     //making sure grade is not a multiple of 5 and grade is higher than a 38
+            tempGrade = initalGrade;                     //the temporary grade if the inital grade is to be rounded up
+            
+            while (tempGrade%5 != 0){                   //seeing how many times it will enter the while loop to see if it is a                                                                   multiple of 5
+                cout << tempGrade << " not a multiple of 5" <<endl;
+                difference++;
+                tempGrade = initalGrade + difference;
+            }
+            
+            if (difference < 3){                        //if the difference is less than 3, it is going to round up 
+                grades[i] = tempGrade;
+            }
+            else{                                       //or else keep the inital grade
+                grades[i] = initalGrade;
+            }
+            
+        }
+        else{
+            grades[i] = initalGrade;                    //if already a multiple of 5 or below 38
+        }
+    }
+    return grades;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int n;
+    cin >> n;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');            //this is to make sure the input is reasonable
+
+    vector<int> grades(n);                                          //size of the vector
+
+    for (int grades_itr = 0; grades_itr < n; grades_itr++) {
+        int grades_item;
+        cin >> grades_item;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        grades[grades_itr] = grades_item;                           //places information into vector
+    }
+
+    vector<int> result = gradingStudents(grades);                   //vector of the resulting grades, calls the function to change
+
+    for (int result_itr = 0; result_itr < result.size(); result_itr++) {
+        fout << result[result_itr];
+
+        if (result_itr != result.size() - 1) {
+            fout << "\n";
+        }
+    }
+
+    fout << "\n";
+
+    fout.close();
+
+    return 0;
+}
