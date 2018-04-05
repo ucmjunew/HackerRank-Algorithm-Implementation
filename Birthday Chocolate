@@ -1,5 +1,9 @@
+/*  
+ *  link to this problem 
+ *  https://www.hackerrank.com/challenges/the-birthday-bar/problem
+ */
+ 
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int solve(int n, vector < int > s, int d, int m){       
