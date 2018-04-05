@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int solve(int n, vector < int > s, int d, int m){       
+    /* n = size
+     * s = vector of integers
+     * d = day (sum up)
+     * m = month (how many pieces)
+     */
+    
+    int temporarySum = 0;
+    int howManyTimes = 0;
+    int differentVariation = 0;
+    int countUp;
+    
+    for (int i=0; i<n-m+1 ; i++){
+        countUp = i;                                //i needed to initate this because i needed to count the consecutive int.
+        while (howManyTimes < m){
+            temporarySum = temporarySum + s[countUp];
+            countUp++;
+            howManyTimes++;
+        }
+        
+        if (temporarySum == d){
+            differentVariation++;
+        }
+        
+        temporarySum = 0;                           //back to 0, so for-loop/while-loop can run through again
+        howManyTimes = 0;
+    }
+    
+    return differentVariation;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    vector<int> s(n);
+    for(int s_i = 0; s_i < n; s_i++){
+       cin >> s[s_i];
+    }
+    int d;
+    int m;
+    cin >> d >> m;
+    int result = solve(n, s, d, m);
+    cout << result << endl;
+    return 0;
+}
