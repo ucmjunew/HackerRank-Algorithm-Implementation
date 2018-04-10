@@ -1,0 +1,57 @@
+/* 
+ * you can find this question at
+ * https://www.hackerrank.com/challenges/day-of-the-programmer/problem
+ */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+/* 
+Julian Calendar
+started : January 1, 45BC
+365.25 days
+leap year is every 4 years
+
+Gregorian Calendar
+365.2425 days
+
+There would be a total of three different variations that need to be accounted for. 
+Best part is everything is still the same. The amount of days per month, regardless 
+1) The year when the calendar was switched.
+2) If it was leap year.
+3) Or not on a leap year.
+
+In the Julian calendar, leap years are divisible by 4; 
+in the Gregorian calendar, leap years are either of the following:
+Divisible by 400.
+Divisible by 4 and not divisible by 100.
+*/
+
+string solve(int year){
+    if (year == 1918){                                      //the year the calendar changed
+        return "26.09.1918";
+    }
+    else if (((year <= 1917) && (year%4 == 0)) || 
+             ((year > 1918) && (year%400 == 0)) || 
+             ((year%4 == 0) && (year%100 != 0))){           //if leap year
+        return "12.09.";
+    }
+    else{                                                   //not leap year
+        return "13.09.";
+    }
+
+}
+
+
+int main() {
+    int year;
+    cin >> year;
+    string result = solve(year);
+    if (result == "26.09.1918"){
+        cout << result << endl;
+    }
+    else{
+        cout << result << year <<endl;
+    }
+    return 0;
+}
